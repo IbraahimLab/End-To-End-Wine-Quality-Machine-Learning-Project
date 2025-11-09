@@ -1,11 +1,18 @@
 import os
 from datetime import date
+import os
 
-DATABASE_NAME = "wine_DB"
+DATABASE_NAME = "wine_DB" 
 
-COLLECTION_NAME = "wine_Collection"
 
-MONGODB_URL_KEY = "MONGODB_URL"
+COLLECTION_NAME = "wine_Collection" 
+
+
+
+MONGODB_URL="mongodb+srv://ibraahim:<db_password>@cluster0.jp7zpdr.mongodb.net/?appName=Cluster0"
+
+
+MONGODB_URL_KEY = "MONGODB_URL" 
 
 PIPELINE_NAME: str = "wine"
 ARTIFACT_DIR: str = "artifact"
