@@ -1,0 +1,22 @@
+pandas # for data manipulation
+numpy # for numerical computations
+matplotlib # for data visualization
+plotly  # for interactive visualizations
+seaborn
+scipy  # for scientific computations
+scikit-learn
+imblearn
+tabpfn
+pymongo  # for MongoDB interactions
+from_root
+evidently==0.2.8
+dill    
+PyYAML
+boto3
+mypy-boto3-s3
+botocore
+fastapi
+uvicorn
+jinja2
+python-multipart
+-e .
