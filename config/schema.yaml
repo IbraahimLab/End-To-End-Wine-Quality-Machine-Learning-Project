@@ -1,4 +1,6 @@
 columns:
+  - _id: object
+  - Id: int
   - fixed acidity: float
   - volatile acidity: float
   - citric acid: float
@@ -30,6 +32,7 @@ categorical_columns: []
 drop_columns:
   - _id
   - Id
+
 
 
 # for data transformation
