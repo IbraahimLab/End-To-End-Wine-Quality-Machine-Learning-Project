@@ -1,0 +1,75 @@
+columns:
+  - fixed acidity: float
+  - volatile acidity: float
+  - citric acid: float
+  - residual sugar: float
+  - chlorides: float
+  - free sulfur dioxide: float
+  - total sulfur dioxide: float
+  - density: float
+  - pH: float
+  - sulphates: float
+  - alcohol: float
+  - quality: int
+
+numerical_columns:
+  - fixed acidity
+  - volatile acidity
+  - citric acid
+  - residual sugar
+  - chlorides
+  - free sulfur dioxide
+  - total sulfur dioxide
+  - density
+  - pH
+  - sulphates
+  - alcohol
+
+categorical_columns: []
+
+drop_columns:
+  - _id
+  - Id
+
+
+# for data transformation
+num_features:
+  - fixed acidity
+  - volatile acidity
+  - citric acid
+  - residual sugar
+  - chlorides
+  - free sulfur dioxide
+  - total sulfur dioxide
+  - density
+  - pH
+  - sulphates
+  - alcohol
+
+oh_columns: []
+
+or_columns: []
+
+transform_columns:
+  - fixed acidity
+  - volatile acidity
+  - citric acid
+  - residual sugar
+  - chlorides
+  - free sulfur dioxide
+  - total sulfur dioxide
+  - density
+  - pH
+  - sulphates
+  - alcohol
+
+target_column: quality
+
+domain_value:
+  quality:
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
