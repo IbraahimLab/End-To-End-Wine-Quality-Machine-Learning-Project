@@ -1,5 +1,23 @@
-from wine_quality.pipline.training_pipeline import TrainingPipeline
+from wine_quality.pipline.prediction_pipeline import WineData, WineRegressor
+
+data = WineData(
+    fixed_acidity=7.4,
+    volatile_acidity=0.70,
+    citric_acid=0.00,
+    residual_sugar=1.9,
+    chlorides=0.076,
+    free_sulfur_dioxide=11.0,
+    total_sulfur_dioxide=34.0,
+    density=0.9978,
+    pH=3.51,
+    sulphates=0.56,
+    alcohol=9.4
+)
+
+df = data.get_wine_input_data_frame()
+predictor = WineRegressor()
+result = predictor.predict(df)
+
+print("Predicted Wine Quality:", result)
 
 
-obj=TrainingPipeline()
-obj.run_pipeline()

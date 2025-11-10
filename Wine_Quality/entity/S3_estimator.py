@@ -7,7 +7,8 @@ from pandas import DataFrame
 
 class WineEstimator:
     """
-    This class is used to save and retrieve wine quality model...
+    This class is used to save and retrieve wine quality model... it mean this class will interact with S3 bucket and i use
+      this in when i am doing prediction it ables to laod me the model from s3 bucket and predict something 
     """
 
     def __init__(self,bucket_name,model_path,):
