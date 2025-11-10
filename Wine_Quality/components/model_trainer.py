@@ -3,6 +3,8 @@ from typing import Tuple
 
 import numpy as np
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+import mlflow
+import mlflow.sklearn
 
 from wine_quality.utils.model_factory import ModelFactory
 from wine_quality.exception import custom_Exception
@@ -55,6 +57,11 @@ class ModelTrainer:
 
             best_model = best_model_detail["best_model"]
 
+            #MLFlow logging
+            with mlflow.start_run(run_name="wine_quality_training"):
+                  mlflow.log_param("model_name", best_model_detail["best_model_name"])
+                  mlflow.log_param("hyperparameters", best_model_detail["best_params"])
+
             if best_model is None:
                 raise custom_Exception(
                     "No suitable model found above base score.", sys
@@ -72,12 +79,24 @@ class ModelTrainer:
                 mse=mse,
             )
 
+
+            # MLFlow logging Metric
+
+            mlflow.log_metric("r2_score", metric_artifact.r2_score)
+            mlflow.log_metric("mae", metric_artifact.mae)
+            mlflow.log_metric("mse", metric_artifact.mse)
+
+
             logging.info(
                 f"Best Model: {best_model_detail['best_model_name']}, "
                 f"R2: {r2:.4f}, MAE: {mae:.4f}, MSE: {mse:.4f}"
             )
+            mlflow.sklearn.log_model(best_model_detail["best_model"], "model")
 
             return best_model_detail, metric_artifact
+        
+           
+
 
         except Exception as e:
             raise custom_Exception(e, sys) from e
