@@ -45,12 +45,25 @@ class SimpleStorageService:
         """
         logging.info("Entered the read_object method of S3Operations class")
 
+        # try:
+        #     func = (
+        #         lambda: object_name.get()["Body"].read().decode()
+        #         if decode is True
+        #         else object_name.get()["Body"].read()
+        #     )
+
+
         try:
+            if isinstance(object_name, list):
+            # handle the first element or log a warning
+             logging.warning("Received a list instead of a single object; using first element.")
+            object_name = object_name[0]
+
             func = (
-                lambda: object_name.get()["Body"].read().decode()
-                if decode is True
-                else object_name.get()["Body"].read()
-            )
+            lambda: object_name.get()["Body"].read().decode()
+            if decode
+            else object_name.get()["Body"].read()
+                  )
             conv_func = lambda: StringIO(func()) if make_readable is True else func()
             logging.info("Exited the read_object method of S3Operations class")
             return conv_func()
@@ -104,7 +117,7 @@ class SimpleStorageService:
             return file_objs
 
         except Exception as e:
-          raise custom_Exception (e, sys) from e
+          raise custom_Exception  (e, sys) from e
 
     def load_model(self, model_name: str, bucket_name: str, model_dir: str = None) -> object:
         """
