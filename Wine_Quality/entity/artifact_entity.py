@@ -28,3 +28,36 @@ class DataTransformationArtifact:
     transformed_object_file_path:str 
     transformed_train_file_path:str
     transformed_test_file_path:str
+
+
+
+from dataclasses import dataclass
+
+@dataclass
+class RegressionMetricArtifact:
+    r2_score: float
+    mae: float      # Mean Absolute Error
+    mse: float      # Mean Squared Error
+
+
+
+@dataclass
+class ModelTrainerArtifact:
+    trained_model_file_path:str 
+    metric_artifact: RegressionMetricArtifact
+    
+
+
+@dataclass
+class ModelEvaluationArtifact:
+    is_model_accepted:bool
+    changed_accuracy:float
+    s3_model_path:str 
+    trained_model_path:str
+
+
+
+@dataclass
+class ModelPusherArtifact:
+    bucket_name:str
+    s3_model_path:str

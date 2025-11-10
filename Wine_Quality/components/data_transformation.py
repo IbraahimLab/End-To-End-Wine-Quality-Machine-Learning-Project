@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from imblearn.combine import SMOTEENN
 from imblearn.over_sampling import SMOTE
+from imblearn.combine import SMOTEENN
+from imblearn.under_sampling import EditedNearestNeighbours
 
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
@@ -154,13 +156,30 @@ class DataTransformation:
             logging.info("Applied preprocessing transformations successfully.")
 
             # Balance dataset with SMOTEENN
-            smt = SMOTEENN(sampling_strategy="minority", smote=SMOTE(k_neighbors=2))
+            
+            # smt = SMOTEENN(sampling_strategy="minority", smote=SMOTE(k_neighbors=1))
+
+            
+
+            # smt = SMOTEENN(
+            # sampling_strategy="minority",
+            # smote=SMOTE(k_neighbors=1),
+            # enn=EditedNearestNeighbours(n_neighbors=1)
+            #                 )
+
+            smt = SMOTEENN(
+            sampling_strategy="minority",
+            smote=SMOTE(k_neighbors=1),
+            enn=EditedNearestNeighbours(n_neighbors=1)
+                )
+
+
 
 
             input_feature_train_final, target_feature_train_final = smt.fit_resample(
              input_feature_train_arr, target_feature_train_df
             )
-            input_feature_test_final, target_feature_test_final =(
+            input_feature_test_final, target_feature_test_final = smt.fit_resample(
             input_feature_test_arr, target_feature_test_df
             )
 

@@ -1,14 +1,20 @@
 import os
 import sys
 
-def error_message_detail(error, error_detail:sys):
-    _, _, exc_tb = error_detail.exc_info()
-    file_name = exc_tb.tb_frame.f_code.co_filename
-    error_message = "Error occurred python script name [{0}] line number [{1}] error message [{2}]".format(
-        file_name, exc_tb.tb_lineno, str(error)
-    )
+def error_message_detail(error, error_detail: sys):
+    try:
+        _, _, exc_tb = error_detail.exc_info()
+        if exc_tb is not None:
+            file_name = exc_tb.tb_frame.f_code.co_filename
+            line_number = exc_tb.tb_lineno
+        else:
+            file_name = "Unknown file"
+            line_number = "Unknown line"
 
-    return error_message
+        return f"Error occurred python script name [{file_name}] line number [{line_number}] error message [{str(error)}]"
+    except Exception as e:
+        return f"Error while logging exception: {str(e)} | Original error: {str(error)}"
+
 
 class custom_Exception(Exception):
     def __init__(self, error_message, error_detail):
