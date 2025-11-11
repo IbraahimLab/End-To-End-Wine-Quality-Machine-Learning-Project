@@ -1,0 +1,65 @@
+stages:
+  data_ingestion:
+    cmd: python wine_quality/components/data_ingestion.py
+    deps:
+      - wine_quality/components/data_ingestion.py
+      - config/schema.yaml
+    outs:
+      - artifact/data_ingestion/feature_store/raw_data.csv
+      - artifact/data_ingestion/ingested/train.csv
+      - artifact/data_ingestion/ingested/test.csv
+
+  data_validation:
+    cmd: python wine_quality/components/data_validation.py
+    deps:
+      - wine_quality/components/data_validation.py
+      - artifact/data_ingestion/ingested/train.csv
+      - artifact/data_ingestion/ingested/test.csv
+      - config/schema.yaml
+    outs:
+      - artifact/data_validation/drift_report/report.yaml
+
+  data_transformation:
+    cmd: python wine_quality/components/data_transformation.py
+    deps:
+      - wine_quality/components/data_transformation.py
+      - artifact/data_ingestion/ingested/train.csv
+      - artifact/data_ingestion/ingested/test.csv
+      - artifact/data_validation/drift_report/report.yaml
+    outs:
+      - artifact/data_transformation/transformed/train.npy
+      - artifact/data_transformation/transformed/test.npy
+      - artifact/data_transformation/transformed_object/preprocessing.pkl
+
+  model_trainer:
+    cmd: python wine_quality/components/model_trainer.py
+    deps:
+      - wine_quality/components/model_trainer.py
+      - artifact/data_transformation/transformed/train.npy
+      - artifact/data_transformation/transformed/test.npy
+      - artifact/data_transformation/transformed_object/preprocessing.pkl
+      - config/model.yaml
+    outs:
+      - artifact/model_trainer/trained_model/model.pkl
+
+  model_evaluation:
+    cmd: python wine_quality/components/model_evaluation.py
+    deps:
+      - wine_quality/components/model_evaluation.py
+      - artifact/model_trainer/trained_model/model.pkl
+      - artifact/data_transformation/transformed/test.npy
+    metrics:
+      - artifact/model_evaluation/metrics.json
+    outs:
+      - artifact/model_evaluation/evaluation_report.json
+
+  model_pusher:
+    cmd: python wine_quality/components/model_pusher.py
+    deps:
+      - wine_quality/components/model_pusher.py
+      - artifact/model_trainer/trained_model/model.pkl
+      - artifact/data_transformation/transformed_object/preprocessing.pkl
+      - artifact/model_evaluation/evaluation_report.json
+    outs:
+      - artifact/model_pusher/saved_model/model.pkl
+      - artifact/model_pusher/saved_model/preprocessing.pkl

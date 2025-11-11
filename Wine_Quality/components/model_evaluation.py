@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append(os.getcwd())
 from wine_quality.entity.config_entity import ModelEvaluationConfig
 from wine_quality.entity.artifact_entity import ModelTrainerArtifact, DataIngestionArtifact, ModelEvaluationArtifact
 from sklearn.metrics import f1_score

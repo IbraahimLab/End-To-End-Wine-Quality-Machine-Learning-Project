@@ -34,8 +34,16 @@ class WineEstimator:
         Load the model from the model_path
         :return:
         """
+        try:
+            if not self.is_model_present(self.model_path):
+                    raise Exception(f"Model not found in S3 at path: {self.model_path}")
+                
+            return self.s3.load_model(self.model_path, bucket_name=self.bucket_name)
+             
+        except Exception as e:
+            raise custom_Exception(e, sys)
 
-        return self.s3.load_model(self.model_path,bucket_name=self.bucket_name)
+        # return self.s3.load_model(self.model_path,bucket_name=self.bucket_name)
 
     def save_model(self,from_file,remove:bool=False)->None:
         """

@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append(os.getcwd())
 import sys
 
 from wine_quality.cloud_storage.aws_storage import SimpleStorageService

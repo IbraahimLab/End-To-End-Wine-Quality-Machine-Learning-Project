@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Initialize model from S3
 model = WineEstimator(
     bucket_name="wine-project-s3-bucket",  # replace with your actual bucket name
-    model_path="model-registry"               # replace if your path is different
+    model_path="model.pkl"               # replace if your path is different
 )
 
 @app.route('/')

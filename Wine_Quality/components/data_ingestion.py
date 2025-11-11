@@ -1,5 +1,8 @@
+import sys, os
+sys.path.append(os.getcwd())
 import os 
 from pandas import DataFrame
+
 from sklearn.model_selection import train_test_split
 from wine_quality.exception import custom_Exception
 from wine_quality.logger import logging

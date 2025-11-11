@@ -1,6 +1,9 @@
+import sys, os
+sys.path.append(os.getcwd())
 import sys
 import numpy as np
 import pandas as pd
+
 from imblearn.combine import SMOTEENN
 from imblearn.over_sampling import SMOTE
 from imblearn.combine import SMOTEENN
