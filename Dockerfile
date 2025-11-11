@@ -1,24 +1,22 @@
 # Base image
 FROM python:3.10-slim-buster
 
-# Create app directory
+# Set working directory
 WORKDIR /app
 
-# Copy everything
+# Copy all project files
 COPY . /app
-
-# Upgrade build tools
-RUN pip install --upgrade pip setuptools wheel
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Directly install the wine_quality package (not editable mode)
-RUN pip install ./wine_quality
+# 👇 Make sure your package is installed in the container
+RUN pip install -e .
 
-# Add /app to PYTHONPATH (so Python always sees it)
-ENV PYTHONPATH="/app:$PYTHONPATH"
-
+# Expose Flask/FastAPI port
 EXPOSE 8080
 
+# Run the application
 CMD ["python3", "app.py"]
+
+
